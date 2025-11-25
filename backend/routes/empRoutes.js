@@ -1,4 +1,6 @@
 // routes/empRoutes.js
+const upload = require("../middleware/upload");
+
 const auth = require("../middleware/auth");
 const express = require('express');
 const { body, param, query } = require('express-validator');
@@ -21,7 +23,8 @@ router.get(
 // Create employee
 router.post(
   '/employees',
-  auth,               
+  auth,
+  upload.single("profile_picture"), 
   [
     body('first_name').trim().notEmpty().withMessage('first_name is required'),
     body('last_name').trim().notEmpty().withMessage('last_name is required'),

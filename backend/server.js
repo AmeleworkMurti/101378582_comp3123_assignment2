@@ -16,6 +16,8 @@ const authRoutes = require("./routes/auth");
 app.use("/api", authRoutes);
 
 
+app.use("/uploads", express.static("uploads"));
+
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/emp', empRoutes);
 
