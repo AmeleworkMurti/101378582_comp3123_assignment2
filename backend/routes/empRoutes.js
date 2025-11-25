@@ -1,4 +1,5 @@
 // routes/empRoutes.js
+const auth = require("../middleware/auth");
 const express = require('express');
 const { body, param, query } = require('express-validator');
 const validate = require('../middleware/validateRequest');
@@ -6,12 +7,21 @@ const { getAllEmps, createEmp, getEmpById, updateEmp, deleteEmp } = require('../
 
 const router = express.Router();
 
-// List - no validation needed
-router.get('/employees', getAllEmps);
+// =========================
+// PROTECTED ROUTES BELOW
+// =========================
+
+// List employees
+router.get(
+  '/employees',
+  auth,              
+  getAllEmps
+);
 
 // Create employee
 router.post(
   '/employees',
+  auth,               
   [
     body('first_name').trim().notEmpty().withMessage('first_name is required'),
     body('last_name').trim().notEmpty().withMessage('last_name is required'),
@@ -25,17 +35,21 @@ router.post(
   createEmp
 );
 
-// Get by ID - validate path param
+// Get employee by ID
 router.get(
   '/employees/:eid',
-  [ param('eid').isMongoId().withMessage('Invalid employee id') ],
+  auth,             
+  [
+    param('eid').isMongoId().withMessage('Invalid employee id')
+  ],
   validate,
   getEmpById
 );
 
-// Update by ID - validate path param + optional fields in body
+// Update employee by ID
 router.put(
   '/employees/:eid',
+  auth,              
   [
     param('eid').isMongoId().withMessage('Invalid employee id'),
     body('position').optional().trim().notEmpty().withMessage('position cannot be empty'),
@@ -47,13 +61,15 @@ router.put(
   updateEmp
 );
 
-// Delete by id via query param ?eid=...
+// Delete employee by ID (query param)
 router.delete(
   '/employees',
-  [ query('eid').isMongoId().withMessage('Invalid employee id in query param') ],
+  auth,               
+  [
+    query('eid').isMongoId().withMessage('Invalid employee id in query param')
+  ],
   validate,
   deleteEmp
 );
 
 module.exports = router;
-
