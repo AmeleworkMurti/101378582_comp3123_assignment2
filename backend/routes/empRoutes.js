@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 const express = require('express');
 const { body, param, query } = require('express-validator');
 const validate = require('../middleware/validateRequest');
-const { getAllEmps, createEmp, getEmpById, updateEmp, deleteEmp } = require('../controllers/empController');
+const { getAllEmps, createEmp, getEmpById, updateEmp, deleteEmp, searchEmployees } = require('../controllers/empController');
 
 const router = express.Router();
 
@@ -74,5 +74,19 @@ router.delete(
   validate,
   deleteEmp
 );
+
+
+//Search employees by department or position
+router.get(
+  '/employees/search',
+  [
+    query('department').optional().trim(),
+    query('position').optional().trim()
+  ],
+ // validate,
+  searchEmployees
+);
+
+
 
 module.exports = router;

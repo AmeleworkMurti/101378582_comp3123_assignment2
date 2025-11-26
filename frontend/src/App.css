@@ -1,38 +1,13 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+body { font-family: Arial, sans-serif; background:#f5f6fa; margin:0; }
+.container { max-width:1000px; margin:24px auto; padding:10px; }
+.navbar { display:flex; justify-content:space-between; padding:12px 24px; background:#0b5fff; color:white; }
+.brand { color:white; text-decoration:none; font-weight:700; font-size:18px; }
+.nav-right a, .nav-right .btn-link { color:white; margin-left:12px; text-decoration:none; }
+.card { background:white; padding:16px; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.card-header{display:flex;justify-content:space-between;align-items:center}
+.table{width:100%;border-collapse:collapse;margin-top:12px}
+.table th, .table td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+button{padding:6px 10px;margin:2px}
+.btn{background:#0b5fff;color:white;padding:6px 10px;border:none;border-radius:4px;text-decoration:none}
+.error{color:#9b1c1c;background:#ffdede;padding:8px;border-radius:4px;margin-bottom:8px}
+input{display:block;padding:8px;margin:6px 0 12px;width:100%;box-sizing:border-box}

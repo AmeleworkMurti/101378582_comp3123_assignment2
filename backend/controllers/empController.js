@@ -69,3 +69,25 @@ exports.deleteEmp = async (req, res) => {
     res.status(400).json({ status: false, message: err.message });
   }
 };
+
+// Search employees
+exports.searchEmployees = async (req, res) => {
+  try {
+    const { department, position } = req.query;
+
+    // Build query dynamically
+    const queryObj = {};
+    if (department) queryObj.department = department;
+    if (position) queryObj.position = position;
+
+    const employees = await Employee.find(queryObj);
+    res.status(200).json(employees);
+  } catch (err) {
+    res.status(500).json({ status: false, message: err.message });
+  }
+};
+
+
+
+
+
