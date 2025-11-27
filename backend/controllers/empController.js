@@ -45,20 +45,36 @@ exports.getEmpById = async (req, res) => {
 // Update employee by ID
 exports.updateEmp = async (req, res) => {
   try {
-    const updatedData = { ...req.body };
+console.log("🔥 UPDATE RECEIVED BODY:", req.body);
+console.log("🔥 UPDATE RECEIVED FILE:", req.file);
 
-    // If new profile picture is uploaded, include it
+    const eid = req.params.eid;
+    if (!eid) return res.status(400).json({ message: "Missing employee id" });
+
+    // Build update object from body
+    const updateObj = { ...req.body };
+
+    
+    
+    
     if (req.file) {
-      updatedData.profile_picture = req.file.filename;
+      updateObj.profile_picture = req.file.filename;
     }
+    // If some form fields come as strings but should be numbers/dates, convert here
+    if (updateObj.salary) updateObj.salary = parseFloat(updateObj.salary);
 
-    await Employee.findByIdAndUpdate(req.params.eid, updatedData);
 
-    res.status(200).json({ message: "Employee details updated successfully." });
+    const updated = await Employee.findByIdAndUpdate(eid, updateObj, { new: true, runValidators: true });
+
+    if (!updated) return res.status(404).json({ message: "Employee not found" });
+
+    return res.status(200).json({ message: "Employee updated successfully", employee: updated });
   } catch (err) {
-    res.status(400).json({ status: false, message: err.message });
+    // Send full error for debugging 
+    return res.status(500).json({ message: "Update failed", error: err.message });
   }
 };
+
 
 // Delete employee by ID (query param)
 exports.deleteEmp = async (req, res) => {
@@ -70,13 +86,18 @@ exports.deleteEmp = async (req, res) => {
   }
 };
 
-// Search employees
+//search
 exports.searchEmployees = async (req, res) => {
   try {
     const { department, position } = req.query;
 
-    // Build query dynamically
-    const queryObj = {};
+    // If no filters, return everything
+    if (!department && !position) {
+      const all = await Employee.find();
+      return res.status(200).json(all);
+    }
+
+    const queryObj = {}; // <--- make sure this line exists!
     if (department) queryObj.department = department;
     if (position) queryObj.position = position;
 
@@ -86,6 +107,7 @@ exports.searchEmployees = async (req, res) => {
     res.status(500).json({ status: false, message: err.message });
   }
 };
+
 
 
 

@@ -1,0 +1,59 @@
+/* MAIN NAVBAR CONTAINER */
+.nav-container {
+  width: 100%;
+  background: #1f2937; /* dark navy */
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* for assignment name */
+.nav-brand {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* RIGHT SIDE LINKS AREA */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* LINK STYLE */
+.nav-item {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: 0.25s ease;
+}
+
+.nav-item:hover {
+  background: #374151;
+  color: white;
+}
+
+/* LOGOUT BUTTON */
+.nav-logout {
+  padding: 8px 14px;
+  background: #ef4444;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: 0.25s ease;
+}
+
+.nav-logout:hover {
+  background: #dc2626;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./Navbar.css"; 
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -11,20 +12,23 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar">
-      <div className="nav-left">
-        <Link to="/employees" className="brand">AmeleworkMurti-assignment02</Link>
+    <nav className="nav-container">
+      <div className="nav-brand">
+        Amelework Murti • Assignment 02
       </div>
-      <div className="nav-right">
+
+      <div className="nav-links">
         {!token ? (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
+            <Link className="nav-item" to="/login">Login</Link>
+            <Link className="nav-item" to="/signup">Signup</Link>
           </>
         ) : (
           <>
-            <Link to="/employees">Employees</Link>
-            <button className="btn-link" onClick={logout}>Logout</button>
+            <Link className="nav-item" to="/employees">Employees</Link>
+            <button className="nav-logout" onClick={logout}>
+              Logout
+            </button>
           </>
         )}
       </div>

@@ -38,6 +38,16 @@ router.post(
   createEmp
 );
 
+
+//Search employees by department or position
+router.get(
+  '/employees/search',
+  auth,
+  searchEmployees
+);
+
+
+
 // Get employee by ID
 router.get(
   '/employees/:eid',
@@ -52,7 +62,8 @@ router.get(
 // Update employee by ID
 router.put(
   '/employees/:eid',
-  auth,              
+  auth,
+  upload.single("profile_picture"),              
   [
     param('eid').isMongoId().withMessage('Invalid employee id'),
     body('position').optional().trim().notEmpty().withMessage('position cannot be empty'),
@@ -75,17 +86,6 @@ router.delete(
   deleteEmp
 );
 
-
-//Search employees by department or position
-router.get(
-  '/employees/search',
-  [
-    query('department').optional().trim(),
-    query('position').optional().trim()
-  ],
- // validate,
-  searchEmployees
-);
 
 
 

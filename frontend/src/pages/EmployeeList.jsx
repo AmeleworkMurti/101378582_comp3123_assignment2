@@ -18,15 +18,34 @@ export default function EmployeeList() {
     }
   });
 
+
+
+  
   const deleteEmp = async (id) => {
     if (!window.confirm("Delete this employee?")) return;
     await api.delete("/emp/employees", { params: { eid: id } });
     qc.invalidateQueries(["employees"]);
   };
 
+const handleSearch = async () => {
+  try {
+    const res = await api.get("/emp/employees/search", {
+      params: {
+        department: department || undefined,
+        position: position || undefined
+      }
+    });
+    qc.setQueryData(["employees"], res.data);
+  } catch (err) {
+    console.error("Search error:", err);
+  }
+};
+
   if (isLoading) return <div className="text-center mt-5">Loading...</div>;
   if (error) return <div className="alert alert-danger mt-3">Error loading employees</div>;
 
+
+  
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -50,12 +69,13 @@ export default function EmployeeList() {
           value={position}
           onChange={(e) => setPosition(e.target.value)}
         />
-        <button 
-          className="btn btn-secondary"
-          onClick={() => qc.invalidateQueries(["employees", department, position])}
-        >
-          Search
-        </button>
+       <button 
+  className="btn btn-secondary"
+  onClick={handleSearch}
+>
+  Search
+</button>
+
       </div>
 
       <table className="table table-striped table-hover">
@@ -81,8 +101,8 @@ export default function EmployeeList() {
               <td>{emp.position}</td>
               <td>{emp.department}</td>
               <td>
-                <button className="btn btn-info btn-sm me-1" onClick={() => navigate(`/employees/${emp._id}`)}>View</button>
-                <button className="btn btn-warning btn-sm me-1" onClick={() => navigate(`/employees/edit/${emp._id}`)}>Update</button>
+                <button className="btn btn-info btn-sm me-1" onClick={() => navigate(`/employees/${emp._id}`)}>View</button>{" "}
+                <button className="btn btn-warning btn-sm me-2" onClick={() => navigate(`/employees/edit/${emp._id}`)}>Update</button>{" "}
                 <button className="btn btn-danger btn-sm" onClick={() => deleteEmp(emp._id)}>Delete</button>
               </td>
             </tr>

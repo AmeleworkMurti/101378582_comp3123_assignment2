@@ -25,10 +25,21 @@ export default function EmployeeDetails() {
       <p><strong>Department</strong>: {emp.department}</p>
       <p><strong>Date of joining</strong>: {new Date(emp.date_of_joining).toLocaleDateString()}</p>
 
-      <div>
-        <button onClick={() => navigate(`/employees/edit/${emp._id}`)}>Update</button>
-        <button onClick={() => navigate("/employees")}>Back</button>
-      </div>
+      <div className="mt-3">
+  <button 
+    className="btn btn-warning btn-sm me-2" 
+    onClick={() => navigate(`/employees/edit/${emp._id}`)}
+  >
+    Update
+  </button>
+  <button 
+    className="btn btn-secondary btn-sm" 
+    onClick={() => navigate("/employees")}
+  >
+    Back
+  </button>
+</div>
+
     </div>
   );
 }
